@@ -9,7 +9,20 @@ public class SupplierData {
     private String category;
     private String tier;
     private int riskScore;
-    private String status;
+    public SupplierData(int id, String name, String code, String location, String category, String tier, int riskScore,
+			String status, int alerts) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.code = code;
+		this.location = location;
+		this.category = category;
+		this.tier = tier;
+		this.riskScore = riskScore;
+		this.status = status;
+		this.alerts = alerts;
+	}
+	private String status;
     private int alerts;
     
 	public int getId() {
