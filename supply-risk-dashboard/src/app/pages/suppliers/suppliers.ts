@@ -5,20 +5,31 @@ import { SupplierService } from '../../services/supplier.service';
 import { PerformanceService } from '../../services/performance.service';
 import { Supplier } from '../../models/supplier.model';
 import { Performance } from '../../models/performance.model';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-suppliers',
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule,FormsModule],
   templateUrl: './suppliers.html',
   styleUrl: './suppliers.css',
 })
 export class Suppliers implements OnInit {
   suppliers: Supplier[] = [];
+  filteredSuppliers: Supplier[] = [];
   loading: boolean = true;
   selectedSupplier: Supplier | null = null;
   performanceMetrics: Performance[] = [];
   currentPerformance: Performance | null = null;
+
+  
+  // Filter properties
+  searchText: string = '';
+  selectedCategory: string = '';
+  selectedRiskLevel: string = '';
+  selectedStatus: string = '';
+  uniqueCategories: string[] = [];
+  uniqueStatuses: string[] = [];
 
   // Lucide icons
   readonly MapPin = MapPin;
@@ -43,6 +54,9 @@ export class Suppliers implements OnInit {
     this.supplierService.getSuppliers().subscribe({
       next: (data) => {
         this.suppliers = [...data];
+        this.filteredSuppliers = [...data];
+        this.extractUniqueValues();
+        this.applyFilters();
         this.loading = false;
         this.cdr.detectChanges();
       },
@@ -52,6 +66,48 @@ export class Suppliers implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  refreshSuppliers(): void {
+    this.loadSuppliers();
+  }
+
+  extractUniqueValues(): void {
+    // Extract unique categories
+    this.uniqueCategories = [...new Set(this.suppliers.map(s => s.category))].sort();
+    
+    // Extract unique statuses
+    this.uniqueStatuses = [...new Set(this.suppliers.map(s => s.status))].sort();
+  }
+
+  applyFilters(): void {
+    this.filteredSuppliers = this.suppliers.filter(supplier => {
+      // Search text filter
+      const matchesSearch = !this.searchText || 
+        supplier.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        supplier.code.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        supplier.location.toLowerCase().includes(this.searchText.toLowerCase());
+
+      // Category filter
+      const matchesCategory = !this.selectedCategory || supplier.category === this.selectedCategory;
+
+      // Risk level filter
+      const matchesRiskLevel = !this.selectedRiskLevel || this.getRiskLevel(supplier.riskScore) === this.selectedRiskLevel;
+
+      // Status filter
+      const matchesStatus = !this.selectedStatus || supplier.status === this.selectedStatus;
+
+      return matchesSearch && matchesCategory && matchesRiskLevel && matchesStatus;
+    });
+
+    this.cdr.detectChanges();
+  }
+
+  getRiskLevel(score: number): string {
+    if (score < 30) return 'low';
+    if (score < 60) return 'medium';
+    if (score < 80) return 'high';
+    return 'critical';
   }
 
   loadPerformanceMetrics(): void {
@@ -91,7 +147,8 @@ export class Suppliers implements OnInit {
   getRiskScoreClass(score: number): string {
     if (score < 30) return 'green';
     if (score < 60) return 'orange';
-    return 'red';
+    if (score < 80) return 'red';
+    return 'darkRed';
   }
 
   getStatusClass(status: string): string {

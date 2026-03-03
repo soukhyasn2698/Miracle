@@ -3,6 +3,7 @@ package com.example.supplier_service.controller;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.supplier_service.entity.Supplier;
@@ -25,6 +26,17 @@ public class SupplierController {
     public Supplier addSupplier(@RequestBody Supplier supplier) {
         return supplierService.addSupplier(supplier);
     }    
+    
+    @PatchMapping("/{id}")
+    public ResponseEntity<Supplier> updateSupplier(
+            @PathVariable int id,
+            @RequestBody Map<String, Object> updates) {
+        Supplier updated = supplierService.updateSupplier(id, updates);
+        if (updated == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updated);
+    }
 }
 
 

@@ -108,10 +108,10 @@ public class Supplier {
                 "Plastic Components", "Tier 1", 32, "active", 1));
         
         suppliers.add(new Supplier(7, "Midwest Castings LLC", "MCL-007", "Indianapolis, IN", 
-                "Cast Components", "Tier 2", 58, "active", 3));
+                "Cast Components", "Tier 2", 65, "active", 3));
         
         suppliers.add(new Supplier(8, "NipponSeiki Automotive", "NSA-008", "Nagano, Japan", 
-                "Instrumentation", "Tier 1", 22, "active", 0));
+                "Instrumentation", "Tier 1", 92, "active", 0));
         
         return suppliers;
 	}

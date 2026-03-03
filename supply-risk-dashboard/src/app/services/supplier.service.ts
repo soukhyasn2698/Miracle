@@ -14,4 +14,12 @@ export class SupplierService {
     getSuppliers(): Observable<Supplier[]> {
         return this.http.get<Supplier[]>(this.apiUrl);
     }
+
+    addSupplier(supplier: Supplier): Observable<Supplier> {
+        return this.http.post<Supplier>(this.apiUrl, supplier);
+    }
+
+    updateSupplier(id: string | number, updates: Partial<Supplier>): Observable<Supplier> {
+        return this.http.patch<Supplier>(`${this.apiUrl}/${id}`, updates);
+    }
 }

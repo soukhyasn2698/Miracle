@@ -6,21 +6,29 @@
 
     <!-- Filter Section -->
     <div class="filter-section">
-      <input type="text" placeholder="Search by name, code, or location..." />
-      <select>
-        <option>All Categories</option>
+      <input type="text" placeholder="Search by name, code, or location..." 
+             [(ngModel)]="searchText" 
+             (input)="applyFilters()" />
+      <select [(ngModel)]="selectedCategory" (change)="applyFilters()">
+        <option value="">All Categories</option>
+        <option *ngFor="let category of uniqueCategories" [value]="category">{{ category }}</option>
       </select>
-      <select>
-        <option>All Risk Levels</option>
+      <select [(ngModel)]="selectedRiskLevel" (change)="applyFilters()">
+        <option value="">All Risk Levels</option>
+        <option value="low">Low Risk</option>
+        <option value="medium">Medium Risk</option>
+        <option value="high">High Risk</option>
+        <option value="critical">Critical</option>
       </select>
-      <select>
-        <option>All Statuses</option>
+      <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+        <option value="">All Statuses</option>
+        <option *ngFor="let status of uniqueStatuses" [value]="status">{{ status }}</option>
       </select>
     </div>
 
     <!-- Supplier Table -->
     <div class="table-card">
-      <h3>Supplier Directory ({{ suppliers.length }})</h3>
+      <h3>Supplier Directory ({{ filteredSuppliers.length }})</h3>
 
       <div *ngIf="loading" style="text-align: center; padding: 20px;">
         Loading suppliers...
@@ -39,7 +47,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let supplier of suppliers" (click)="selectSupplier(supplier)"
+          <tr *ngFor="let supplier of filteredSuppliers" (click)="selectSupplier(supplier)"
             [class.selected]="selectedSupplier?.id === supplier.id">
             <td>{{ supplier.name }}
               <p class="subtitle">{{ supplier.code }} | {{ supplier.location }}</p>
