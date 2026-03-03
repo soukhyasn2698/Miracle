@@ -1,0 +1,162 @@
+<div class="suppliers-container">
+  <div class="suppliers-main">
+    <div class="page-title">
+      <h2>Manage and monitor supplier performance</h2>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <input type="text" placeholder="Search by name, code, or location..." />
+      <select>
+        <option>All Categories</option>
+      </select>
+      <select>
+        <option>All Risk Levels</option>
+      </select>
+      <select>
+        <option>All Statuses</option>
+      </select>
+    </div>
+
+    <!-- Supplier Table -->
+    <div class="table-card">
+      <h3>Supplier Directory ({{ suppliers.length }})</h3>
+
+      <div *ngIf="loading" style="text-align: center; padding: 20px;">
+        Loading suppliers...
+      </div>
+
+      <table *ngIf="!loading">
+        <thead>
+          <tr>
+            <th>Supplier</th>
+            <th>Category</th>
+            <th>Tier</th>
+            <th>Risk Score</th>
+            <th>Status</th>
+            <th>Alerts</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let supplier of suppliers" (click)="selectSupplier(supplier)"
+            [class.selected]="selectedSupplier?.id === supplier.id">
+            <td>{{ supplier.name }}
+              <p class="subtitle">{{ supplier.code }} | {{ supplier.location }}</p>
+            </td>
+            <td>{{ supplier.category }}</td>
+            <td>{{ supplier.tier }}</td>
+            <td [class]="getRiskScoreClass(supplier.riskScore)">{{ supplier.riskScore }}</td>
+            <td [class]="getStatusClass(supplier.status)">{{ supplier.status }}</td>
+            <td>{{ supplier.alerts === 0 ? '-' : supplier.alerts }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Supplier Details Card -->
+  <div class="supplier-details" *ngIf="selectedSupplier">
+    <div class="details-header">
+      <h1>Supplier Details</h1>
+      <button class="close-btn" (click)="closeDetails()">×</button>
+    </div>
+
+    <div class="details-content">
+      <div class="supplier-info">
+        <h2>{{ selectedSupplier.name }}</h2>
+        <p class="subtitle">{{ selectedSupplier.code }}</p>
+        <div class="info-row">
+
+          <span [class]="getStatusClass(selectedSupplier.status)" class="badge">
+            {{ selectedSupplier.status }}
+          </span>
+          <span [class]="getRiskScoreClass(selectedSupplier.riskScore)" class="badge">
+            Risk:{{ selectedSupplier.riskScore }}
+          </span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="detail-item">
+        <lucide-icon [img]="MapPin" class="icon"></lucide-icon>
+        <span>{{ selectedSupplier.location }}</span>
+      </div>
+
+      <div class="detail-item">
+        <lucide-icon [img]="User" class="icon"></lucide-icon>
+        <span>John Doe</span>
+      </div>
+
+      <div class="detail-item">
+        <lucide-icon [img]="Mail" class="icon"></lucide-icon>
+        <span>contact@supplier.com</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="metrics-section">
+        <h4>Performance Scores</h4>
+
+
+        <div class="metric">
+          <div class="metric-header">
+            <span>Quality Score</span>
+            <span class="metric-value">{{ getQualityScore() }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill blue" [style.width.%]="getQualityScore()"></div>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-header">
+            <span>Delivery Score</span>
+            <span class="metric-value">{{ getDeliveryScore() }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill green" [style.width.%]="getDeliveryScore()"></div>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-header">
+            <span>Cost Score</span>
+            <span class="metric-value">{{ getCostScore() }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill yellow" [style.width.%]="getComplianceScore()"></div>
+          </div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-header">
+            <span>Compliance Score</span>
+            <span class="metric-value">{{ getComplianceScore() }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill purple" [style.width.%]="getComplianceScore()"></div>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="contract-section">
+        <h4>Contract Details</h4>
+        <div class="contract-info">
+          <div class="contract-item">
+            <span class="label">Start Date:</span>
+            <span>01/01/2024</span>
+          </div>
+          <div class="contract-item">
+            <span class="label">End Date:</span>
+            <span>12/31/2025</span>
+          </div>
+        </div>
+      </div>-->
+
+      <div class="action-buttons">
+        <button class="btn-secondary">View Full Profile</button>
+        <button class="btn-primary">Assess Risk</button>
+      </div>
+    </div>
+  </div>
+</div>

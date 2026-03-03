@@ -1,0 +1,19 @@
+.header {
+  background-color: #0b1220;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+}

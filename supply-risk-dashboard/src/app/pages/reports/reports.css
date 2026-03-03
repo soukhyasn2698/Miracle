@@ -1,0 +1,24 @@
+.report-chart {
+  background: #0b1220;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+.fake-bar-chart {
+  height: 250px;
+  background: linear-gradient(to right, #3b82f6 70%, #1e293b 30%);
+  margin-top: 15px;
+}
+
+.report-section {
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  flex: 1;
+  background: #0b1220;
+  padding: 20px;
+  border-radius: 10px;
+}

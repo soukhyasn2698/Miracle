@@ -1,0 +1,88 @@
+<div *ngIf="metricsLoaded; else loading">
+  <div class="cards">
+    <div class="card">
+      <h3>Total Suppliers</h3>
+      <h1>{{ metrics.totalSuppliers }}</h1>
+      <p class="subtitle">+2 this month</p>
+    </div>
+
+    <div class="card">
+      <h3>Active Alerts</h3>
+      <h1>{{ metrics.alertsCount }}</h1>
+      <p class="subtitle alert">-3 from last week</p>
+    </div>
+
+    <div class="card">
+      <h3>Avg Risk Score</h3>
+      <h1>{{ metrics.avgRiskScore }}</h1>
+      <p class="subtitle">+5 points</p>
+    </div>
+
+    <div class="card">
+      <h3>High Risk Suppliers</h3>
+      <h1>{{ metrics.activeRisks }}</h1>
+      <p class="subtitle warning">Requires Attention</p>
+    </div>
+  </div>
+
+  <div class="charts-section">
+    <div class="chart-card">
+      <h3>Risk Distribution</h3>
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="riskPieData" [type]="'doughnut'" [options]="pieChartOptions">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Performance Trends</h3>
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="performanceLineData" [type]="'line'" [options]="lineChartOptions">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="lists-section">
+    <div class="list-card">
+      <div class="list-header">
+        <h3>Highest Risk Suppliers</h3>
+        <a href="#" class="view-all">View all →</a>
+      </div>
+      <div class="supplier-list" *ngIf="metrics.highestRiskSuppliers">
+        <div class="supplier-item" *ngFor="let supplier of metrics.highestRiskSuppliers">
+          <div class="supplier-info">
+            <div class="supplier-name">{{ supplier.name }}</div>
+            <div class="supplier-category">{{ supplier.category || 'Manufacturing' }}</div>
+          </div>
+          <div class="supplier-badges">
+            <span class="badge critical">{{ supplier.riskScore }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-card">
+      <div class="list-header">
+        <h3>Recent Alerts</h3>
+        <a href="#" class="view-all">View all →</a>
+      </div>
+      <div class="alert-list" *ngIf="metrics.recentAlerts">
+        <div class="alert-item" *ngFor="let alert of metrics.recentAlerts">
+          <div class="alert-icon">⚠</div>
+          <div class="alert-info">
+            <div class="alert-message">{{ alert.message }}</div>
+            <div class="alert-meta">{{ alert.supplier || 'Unknown Supplier' }} • {{ alert.date }}</div>
+          </div>
+          <span class="badge high">High</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-state">
+    <p>Loading metrics...</p>
+  </div>
+</ng-template>

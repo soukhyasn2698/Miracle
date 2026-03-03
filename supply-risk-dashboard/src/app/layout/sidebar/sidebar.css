@@ -1,0 +1,35 @@
+.sidebar {
+  width: 250px;
+  background-color: #0b1220;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  margin-bottom: 30px;
+}
+
+nav a {
+  display: block;
+  padding: 12px;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-bottom: 5px;
+}
+
+nav a:hover {
+  background-color: #1e293b;
+}
+
+nav a.active {
+  background-color: #1e293b;
+  color: white;
+}
+
+.settings {
+  margin-top: auto;
+  padding: 10px;
+  color: #94a3b8;
+}
