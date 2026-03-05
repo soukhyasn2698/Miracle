@@ -2,6 +2,8 @@ package com.example.dashboard_service.controller;
 
 import com.example.dashboard_service.entity.DashboardResponse;
 import com.example.dashboard_service.service.DashboardService;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,9 +22,11 @@ class DashboardControllerTest {
     @InjectMocks
     private DashboardController dashboardController;
 
-    public DashboardControllerTest() {
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+    
 
     @Test
     void shouldReturnDashboardResponse() {

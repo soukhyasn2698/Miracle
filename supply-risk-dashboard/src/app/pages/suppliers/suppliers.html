@@ -89,17 +89,17 @@
 
       <div class="detail-item">
         <lucide-icon [img]="MapPin" class="icon"></lucide-icon>
-        <span>{{ selectedSupplier.location }}</span>
+        <span>{{ currentCustomer?.location || selectedSupplier.location }}</span>
       </div>
 
       <div class="detail-item">
         <lucide-icon [img]="User" class="icon"></lucide-icon>
-        <span>John Doe</span>
+        <span>{{ currentCustomer?.name || 'N/A' }}</span>
       </div>
 
       <div class="detail-item">
         <lucide-icon [img]="Mail" class="icon"></lucide-icon>
-        <span>contact@supplier.com</span>
+        <span>{{ currentCustomer?.email || 'N/A' }}</span>
       </div>
 
       <div class="divider"></div>
@@ -132,7 +132,7 @@
             <span class="metric-value">{{ getCostScore() }}%</span>
           </div>
           <div class="progress-bar">
-            <div class="progress-fill yellow" [style.width.%]="getComplianceScore()"></div>
+            <div class="progress-fill yellow" [style.width.%]="getCostScore()"></div>
           </div>
         </div>
 

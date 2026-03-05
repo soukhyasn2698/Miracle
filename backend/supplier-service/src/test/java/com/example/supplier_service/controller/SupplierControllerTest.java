@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -24,13 +23,23 @@ class SupplierControllerTest {
 
     private List<Supplier> mockSuppliers;
 
-    public SupplierControllerTest() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @BeforeEach
     void setUp() {
-        mockSuppliers = Supplier.getMockSuppliers();
+        MockitoAnnotations.openMocks(this);
+
+        Supplier s1 = new Supplier();
+        s1.setId(1);
+        s1.setName("AutoParts Global Inc.");
+
+        Supplier s2 = new Supplier();
+        s2.setId(2);
+        s2.setName("PrecisionSteel Corp.");
+
+        Supplier s3 = new Supplier();
+        s3.setId(3);
+        s3.setName("TechnoElectric Systems");
+
+        mockSuppliers = List.of(s1, s2, s3);
     }
 
     @Test
@@ -40,20 +49,17 @@ class SupplierControllerTest {
         List<Supplier> result = supplierController.getAllSuppliers();
 
         assertNotNull(result);
-        assertEquals(mockSuppliers.size(), result.size());
-        assertEquals(mockSuppliers.get(0).getName(), result.get(0).getName());
+        assertEquals(3, result.size());
+        assertEquals("AutoParts Global Inc.", result.get(0).getName());
 
         verify(supplierService, times(1)).getAllSuppliers();
     }
 
     @Test
     void testGetSupplierByIdFound() {
-        Supplier supplier = mockSuppliers.get(2);
-        when(supplierService.getSupplierById(3)).thenReturn(supplier);
+        when(supplierService.getSupplierById(3)).thenReturn(mockSuppliers.get(2));
 
-        Supplier result = supplierController.getSupplier(3); // if controller returns ResponseEntity
-        // OR, if controller returns Supplier directly:
-        // Supplier result = supplierController.getSupplier(3);
+        Supplier result = supplierController.getSupplier(3);
 
         assertNotNull(result);
         assertEquals("TechnoElectric Systems", result.getName());
@@ -65,9 +71,7 @@ class SupplierControllerTest {
     void testGetSupplierByIdNotFound() {
         when(supplierService.getSupplierById(99)).thenReturn(null);
 
-        Supplier result = supplierController.getSupplier(99) != null
-                ? supplierController.getSupplier(99)
-                : null;
+        Supplier result = supplierController.getSupplier(99);
 
         assertNull(result);
 

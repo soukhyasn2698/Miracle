@@ -3,8 +3,10 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { LucideAngularModule, MapPin, User, Mail } from 'lucide-angular';
 import { SupplierService } from '../../services/supplier.service';
 import { PerformanceService } from '../../services/performance.service';
+import { CustomerService } from '../../services/customer.service';
 import { Supplier } from '../../models/supplier.model';
 import { Performance } from '../../models/performance.model';
+import { Customer } from '../../models/customer.model';
 import { FormsModule } from '@angular/forms';
 
 
@@ -21,6 +23,7 @@ export class Suppliers implements OnInit {
   selectedSupplier: Supplier | null = null;
   performanceMetrics: Performance[] = [];
   currentPerformance: Performance | null = null;
+  currentCustomer: Customer | null = null;
 
   
   // Filter properties
@@ -39,6 +42,7 @@ export class Suppliers implements OnInit {
   constructor(
     private supplierService: SupplierService,
     private performanceService: PerformanceService,
+    private customerService: CustomerService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
@@ -125,6 +129,7 @@ export class Suppliers implements OnInit {
   selectSupplier(supplier: Supplier): void {
     this.selectedSupplier = supplier;
     this.loadPerformanceForSupplier(supplier.id);
+    this.loadCustomerForSupplier(supplier.id);
   }
 
   loadPerformanceForSupplier(supplierId: number): void {
@@ -136,6 +141,19 @@ export class Suppliers implements OnInit {
       error: (error) => {
         console.error('Error fetching performance for supplier:', error);
         this.currentPerformance = null;
+      }
+    });
+  }
+
+  loadCustomerForSupplier(supplierId: number): void {
+    this.customerService.getCustomerBySupplierId(supplierId).subscribe({
+      next: (data) => {
+        this.currentCustomer = data;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error fetching customer for supplier:', error);
+        this.currentCustomer = null;
       }
     });
   }

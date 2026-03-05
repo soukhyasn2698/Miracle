@@ -30,20 +30,14 @@ export class Dashboard implements OnInit {
     activeRisks: 0,
     avgRiskScore: 0,
     alertsCount: 0,
-    riskDistribution: { low: 5, medium: 7, high: 3, critical: 1 },
+    
     performanceTrends: [
       { quality: 40, delivery: 75, overall: 72 },
       { quality: 60, delivery: 52, overall: 64 },
       { quality: 80, delivery: 35, overall: 52 },
       { quality: 48, delivery: 62, overall: 70 }
     ],
-    highestRiskSuppliers: [
-      { name: 'Dragon Manufacturing Ltd.', riskScore: 95, category: 'Manufacturing' },
-      { name: 'NorthAtlantic Systems', riskScore: 88, category: 'Logistics' },
-      { name: 'Midwest Castings LLC', riskScore: 85, category: 'Raw Materials' },
-      { name: 'AeroSpace Supplies', riskScore: 82, category: 'Aerospace' },
-      { name: 'EuroTech GmbH', riskScore: 78, category: 'Technology' }
-    ],
+    
     recentAlerts: [
       { message: 'Defect Rate Exceeded Threshold', supplier: 'Dragon Manufacturing Ltd.', date: 'Sep 29, 04:12 AM' },
       { message: 'Consecutive Late Shipments', supplier: 'Global Logistics Inc.', date: 'Sep 28, 11:45 PM' },
@@ -51,7 +45,7 @@ export class Dashboard implements OnInit {
     ]
   };
 
-  // Chart data
+  // ChartData
   riskPieData: ChartData<'doughnut'> = {
     labels: [],
     datasets: [{ data: [] }]

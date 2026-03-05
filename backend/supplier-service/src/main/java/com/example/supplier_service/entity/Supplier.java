@@ -2,14 +2,26 @@ package com.example.supplier_service.entity;
 
 import java.util.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "supplier")
 public class Supplier {
-	private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     private String name;
     private String code;
     private String location;
     private String category;
     private String tier;
+
+    @Column(name = "risk_score")
     private int riskScore;
+
     private String status;
     private int alerts;
 	public String getName() {
@@ -84,7 +96,7 @@ public class Supplier {
 	}
 	
 
-	public static List<Supplier> getMockSuppliers() {
+	/*public static List<Supplier> getMockSuppliers() {
 	    List<Supplier> suppliers = new ArrayList<>();
 	    
 	    suppliers.add(new Supplier(1, "AutoParts Global Inc.", "APG-001", "Detroit, MI", 
@@ -112,7 +124,7 @@ public class Supplier {
 	            "Instrumentation", "Tier 1", 92, "active", 0));
 	    
 	    return suppliers;
-	}
+	}*/
 
    
 }

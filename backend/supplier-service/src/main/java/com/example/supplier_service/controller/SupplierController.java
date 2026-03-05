@@ -14,7 +14,7 @@ import com.example.supplier_service.service.SupplierService;
 
 @RestController
 @RequestMapping("/api/suppliers")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 public class SupplierController {
 
     private final SupplierService supplierService;
@@ -34,16 +34,16 @@ public class SupplierController {
     }
 
     @PostMapping
-    public Supplier addSupplier(@RequestBody Supplier dto) {
+    public Supplier addSupplier(@RequestBody Supplier s) {
         Supplier supplier = new Supplier();
-        supplier.setName(dto.getName());
-        supplier.setCode(dto.getCode());
-        supplier.setLocation(dto.getLocation());
-        supplier.setCategory(dto.getCategory());
-        supplier.setTier(dto.getTier());
-        supplier.setRiskScore(dto.getRiskScore());
-        supplier.setStatus(dto.getStatus());
-        supplier.setAlerts(dto.getAlerts());
+        supplier.setName(s.getName());
+        supplier.setCode(s.getCode());
+        supplier.setLocation(s.getLocation());
+        supplier.setCategory(s.getCategory());
+        supplier.setTier(s.getTier());
+        supplier.setRiskScore(s.getRiskScore());
+        supplier.setStatus(s.getStatus());
+        supplier.setAlerts(s.getAlerts());
 
         return supplierService.addSupplier(supplier);
     }

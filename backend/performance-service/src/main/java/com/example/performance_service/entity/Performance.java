@@ -1,14 +1,25 @@
 package com.example.performance_service.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "performance")
 public class Performance {
-	private int id;
-	private int qualityScore;
-	private int deliveryScore;
-	private int costScore;
-	private int complianceScore;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "supplier_id")
+    private int supplierId;
+
+    private int qualityScore;
+    private int deliveryScore;
+    private int costScore;
+    private int complianceScore;
 	public int getQualityScore() {
 		return qualityScore;
 	}
@@ -51,7 +62,7 @@ public class Performance {
 		this.id = id;
 	}
 	
-	public static List<Performance> getMockPerformanceMetrics() {
+	/*public static List<Performance> getMockPerformanceMetrics() {
         List<Performance> performanceMetrics = new ArrayList<>();
         
         performanceMetrics.add(new Performance(1,64,17,68,46));
@@ -66,7 +77,7 @@ public class Performance {
         return performanceMetrics;
         
 	
-	}
+	}*/
 	
 
 }
