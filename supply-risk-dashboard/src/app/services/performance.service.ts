@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Performance } from '../models/performance.model';
+import { MonthlyPerformance } from '../models/monthly-performance.model';
 
 @Injectable({
     providedIn: 'root'
@@ -17,5 +18,9 @@ export class PerformanceService {
 
     getPerformanceById(id: number): Observable<Performance> {
         return this.http.get<Performance>(`${this.apiUrl}/${id}`);
+    }
+
+    getMonthlyTrends(): Observable<MonthlyPerformance[]> {
+        return this.http.get<MonthlyPerformance[]>(`${this.apiUrl}/trends`);
     }
 }

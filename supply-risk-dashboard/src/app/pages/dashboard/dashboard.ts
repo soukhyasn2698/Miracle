@@ -10,9 +10,9 @@ export interface DashboardMetrics {
   avgRiskScore: number;
   alertsCount: number;
   riskDistribution?: { low: number; medium: number; high: number; critical: number };
-  performanceTrends?: { quality: number; delivery: number; overall: number }[];
+  performanceTrends?: { month: string; quality: number; delivery: number; overall: number }[];
   highestRiskSuppliers?: { name: string; riskScore: number; category?: string }[];
-  recentAlerts?: { message: string; date: string; supplier?: string }[];
+  recentAlerts?: { message: string; date: string; supplier?: string; severity?: string }[];
 }
 
 @Component({
@@ -29,20 +29,7 @@ export class Dashboard implements OnInit {
     totalSuppliers: 0,
     activeRisks: 0,
     avgRiskScore: 0,
-    alertsCount: 0,
-    
-    performanceTrends: [
-      { quality: 40, delivery: 75, overall: 72 },
-      { quality: 60, delivery: 52, overall: 64 },
-      { quality: 80, delivery: 35, overall: 52 },
-      { quality: 48, delivery: 62, overall: 70 }
-    ],
-    
-    recentAlerts: [
-      { message: 'Defect Rate Exceeded Threshold', supplier: 'Dragon Manufacturing Ltd.', date: 'Sep 29, 04:12 AM' },
-      { message: 'Consecutive Late Shipments', supplier: 'Global Logistics Inc.', date: 'Sep 28, 11:45 PM' },
-      { message: 'IATF 16949 Certification Expiring', supplier: 'Quality Parts Co.', date: 'Sep 27, 02:30 PM' }
-    ]
+    alertsCount: 0
   };
 
   // ChartData
@@ -170,29 +157,30 @@ export class Dashboard implements OnInit {
     }
 
     // Prepare Line chart data for performance trends
-    if (this.metrics.performanceTrends) {
+    if (this.metrics.performanceTrends && this.metrics.performanceTrends.length > 0) {
+      const reversed = [...this.metrics.performanceTrends].reverse();
       this.performanceLineData = {
-        labels: this.metrics.performanceTrends.map((_, idx) => `Oct Mon${idx + 1}`),
+        labels: reversed.map(d => d.month),
         datasets: [
           {
-            data: this.metrics.performanceTrends.map(t => t.quality),
+            data: reversed.map(d => d.quality),
             label: 'Quality',
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            borderColor: '#4CAF50',
+            backgroundColor: 'rgba(76, 175, 80, 0.1)',
             tension: 0.4
           },
           {
-            data: this.metrics.performanceTrends.map(t => t.delivery),
+            data: reversed.map(d => d.delivery),
             label: 'Delivery',
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderColor: '#2196F3',
+            backgroundColor: 'rgba(33, 150, 243, 0.1)',
             tension: 0.4
           },
           {
-            data: this.metrics.performanceTrends.map(t => t.overall),
+            data: reversed.map(d => d.overall),
             label: 'Overall',
-            borderColor: '#8b5cf6',
-            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+            borderColor: '#FF9800',
+            backgroundColor: 'rgba(255, 152, 0, 0.1)',
             tension: 0.4
           }
         ]

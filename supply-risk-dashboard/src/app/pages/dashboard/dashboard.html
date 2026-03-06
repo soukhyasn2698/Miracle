@@ -72,9 +72,9 @@
           <div class="alert-icon">⚠</div>
           <div class="alert-info">
             <div class="alert-message">{{ alert.message }}</div>
-            <div class="alert-meta">{{ alert.supplier || 'Unknown Supplier' }} • {{ alert.date }}</div>
+            <div class="alert-meta">{{ alert.supplier || 'Unknown Supplier' }} • {{ alert.date | date:'MMM d, hh:mm a' }}</div>
           </div>
-          <span class="badge high">High</span>
+          <span class="badge" [ngClass]="alert.severity?.toLowerCase()">{{ alert.severity }}</span>
         </div>
       </div>
     </div>

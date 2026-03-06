@@ -10,19 +10,25 @@ public class DashboardResponse {
     private int alertsCount;
     private Map<String, Long> riskDistribution;
     private List<HighestRiskSupplier> highestRiskSuppliers;
+    private List<PerformanceTrend> performanceTrends;
+    private List<RecentAlert> recentAlerts;
 
     public DashboardResponse(int totalSuppliers,
                              int activeRisks,
                              int avgRiskScore,
                              int alertsCount,
                              Map<String, Long> riskDistribution,
-                             List<HighestRiskSupplier> highestRiskSuppliers)  {
+                             List<HighestRiskSupplier> highestRiskSuppliers,
+                             List<PerformanceTrend> performanceTrends,
+                             List<RecentAlert> recentAlerts)  {
         this.totalSuppliers = totalSuppliers;
         this.activeRisks = activeRisks;
         this.avgRiskScore = avgRiskScore;
         this.alertsCount = alertsCount;
         this.riskDistribution = riskDistribution;
         this.highestRiskSuppliers = highestRiskSuppliers;
+        this.performanceTrends = performanceTrends;
+        this.recentAlerts = recentAlerts;
     }
 
 	public int getTotalSuppliers() {
@@ -71,6 +77,22 @@ public class DashboardResponse {
 
 	public void setHighestRiskSuppliers(List<HighestRiskSupplier> highestRiskSuppliers) {
 		this.highestRiskSuppliers = highestRiskSuppliers;
+	}
+
+	public List<PerformanceTrend> getPerformanceTrends() {
+		return performanceTrends;
+	}
+
+	public void setPerformanceTrends(List<PerformanceTrend> performanceTrends) {
+		this.performanceTrends = performanceTrends;
+	}
+
+	public List<RecentAlert> getRecentAlerts() {
+		return recentAlerts;
+	}
+
+	public void setRecentAlerts(List<RecentAlert> recentAlerts) {
+		this.recentAlerts = recentAlerts;
 	}
 
 	

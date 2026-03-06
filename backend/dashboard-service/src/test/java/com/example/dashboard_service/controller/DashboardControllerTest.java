@@ -34,6 +34,8 @@ class DashboardControllerTest {
         DashboardResponse mockResponse = new DashboardResponse(
                 10, 2, 65, 4,
                 Map.of("low", 1L, "medium", 2L, "high", 3L, "critical", 4L),
+                null,
+                null,
                 null
         );
 
